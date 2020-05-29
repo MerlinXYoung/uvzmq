@@ -27,12 +27,21 @@ target_link_libraries(zsock_test uvzmq libzmq-static PkgConfig::LIBUV)
 # add_executable(zloop_test zloop_compat_test.c)
 # target_link_libraries(zloop_test zmq)
 
+
+set(includedir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR})
+set(libdir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+set(prefix ${CMAKE_INSTALL_PREFIX})
+configure_file(uvzmq.pc.in uvzmq.pc @ONLY)
+
 install(TARGETS uvzmq zsock_test
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+install(FILES ${PROJECT_BINARY_DIR}/libuv.pc
+DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
 )
 
-install(FILES uv_zsock.h 
-DESTINATION include
+install(FILES uv_zsock.h
+TYPE INCLUDE
 )
