@@ -28,12 +28,13 @@ target_link_libraries(zsock_test uvzmq libzmq-static PkgConfig::LIBUV)
 # target_link_libraries(zloop_test zmq)
 
 if(UNIX)
+include(GNUInstallDirs)
 set(includedir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR})
 set(libdir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
 set(prefix ${CMAKE_INSTALL_PREFIX})
 configure_file(uvzmq.pc.in uvzmq.pc @ONLY)
 
-include(GNUInstallDirs)
+
 install(TARGETS uvzmq zsock_test
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
